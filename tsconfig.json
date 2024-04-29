@@ -11,7 +11,7 @@
         "skipLibCheck": true /* Skip type checking all .d.ts files. */
     },
     "ts-node": {
-    	"swc": false
+    	"swc": true
      },
     "include": ["src/server.ts"],
     "exclude": ["node_modules"]

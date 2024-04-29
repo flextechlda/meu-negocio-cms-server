@@ -1,8 +1,9 @@
-import { database_config } from "../config/dbConfig";
 import { createPool } from "mysql2";
+import dotenv from "dotenv";
 
-var db = createPool(
-    database_config as unknown as Parameters<typeof createPool>[0]
-);
+dotenv.config();
+
+var databaseUrl = process.env.DATABASE_URL as string;
+var db = createPool(databaseUrl);
 
 export default db;

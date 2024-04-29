@@ -57,13 +57,16 @@ export async function SignUp(req: Request, res: Response) {
             //inserting a new user into the database
             db.query(sql, sql_values, (err, result) => {
                 if (result) {
-                    createSession(id);
+                    let user_data = [id, username, phone, email, entry_date];
 
-                    return res.json({
+                    res.json({
                         message: "Conta criada com sucesso!",
                         display_message: "Conta criada com sucesso!",
                         success: true,
+                        user_data: user_data,
                     });
+
+                    createSession(id);
                 }
 
                 if (err) {
@@ -80,11 +83,11 @@ export async function SignUp(req: Request, res: Response) {
 }
 
 function createSession(user_id: string) {
-    // Add 15 days to the current date
     let currentDate = new Date();
     let futureDate = new Date(currentDate);
 
-    futureDate.setDate(currentDate.getDate() + 15);
+    // Adding 7 days to the current date
+    futureDate.setDate(currentDate.getDate() + 7);
 
     let created_at = new Date().toISOString().slice(0, 19).replace("T", " ");
     let expires_at = futureDate.toISOString().slice(0, 19).replace("T", " ");

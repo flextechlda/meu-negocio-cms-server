@@ -1,5 +1,4 @@
 import express from "express";
-import multer from "multer";
 
 import {
     SearchUsers,
@@ -11,8 +10,6 @@ import {
 } from "../../controllers/users";
 
 const router = express.Router();
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 //get requests
 router.get("/get-all-users", GetAllUsersData);
