@@ -60,7 +60,7 @@ export async function SignUp(req: Request, res: Response) {
                     let user_data = [id, username, phone, email, entry_date];
 
                     res.json({
-                        message: "Conta criada com sucesso!",
+                        message: "Account Created Succesfuly!",
                         display_message: "Conta criada com sucesso!",
                         success: true,
                         user_data: user_data,

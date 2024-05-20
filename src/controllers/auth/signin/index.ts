@@ -57,19 +57,34 @@ export async function SignIn(req: Request, res: Response) {
             });
         }
         if (isMatch) {
-            let user_data = {
-                phone: userData.phone,
-                username: userData.username,
-                id: userData.id,
-                email: userData.email,
-                entry_date: userData.entry_date,
-            };
+            let sql = `select * from stocks where user_id = ?;`;
 
-            res.json({
-                message: "Logged in successfuly",
-                display_message: "Logado com sucesso!",
-                user_data: user_data,
-                success: true,
+            db.query(sql, [userData.id], (err, stocks_result: any) => {
+                let sql = `select * from products where user_id = ?;`;
+
+                db.query(sql, [userData.id], (err, products_result: any) => {
+                    let sql = `select * from sales where user_id = ?;`;
+
+                    db.query(sql, [userData.id], (err, sales_result: any) => {
+                        let user_data = {
+                            phone: userData.phone,
+                            username: userData.username,
+                            id: userData.id,
+                            email: userData.email,
+                            entry_date: userData.entry_date,
+                        };
+
+                        res.json({
+                            message: "Logged in successfuly",
+                            display_message: "Logado com sucesso!",
+                            user_data,
+                            products: products_result ? products_result : [],
+                            sales: sales_result ? sales_result : [],
+                            stocks: stocks_result ? stocks_result : [],
+                            success: true,
+                        });
+                    });
+                });
             });
         }
     }
