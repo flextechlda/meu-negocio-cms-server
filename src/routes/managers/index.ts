@@ -2,8 +2,6 @@ import express from "express";
 
 import {
     Signin,
-    RedifyPassword,
-    SendPasswordVerificationCode,
     GetAllManagersData,
     GetManagerDataById,
     RegisterManager,
@@ -16,8 +14,6 @@ import {
 
 const router = express.Router();
 
-router.put("/redify-password", RedifyPassword);
-router.post("/send-password-verification-code", SendPasswordVerificationCode);
 router.post("/signin", Signin);
 
 router.get("/get-all-managers-data", GetAllManagersData);

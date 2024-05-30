@@ -6,13 +6,9 @@ import { UpdateEmail } from "./update_email";
 import { UpdateManagerData } from "./update_manager_data";
 import { UpdatePassword } from "./update_password";
 import { DeleteManagerAccount } from "./delete_manager_account";
-import { RedifyPassword } from "./redify_password";
-import { SendPasswordVerificationCode } from "./send_password_verification_code";
 import { Signin } from "./signin";
 
 export {
-    RedifyPassword,
-    SendPasswordVerificationCode,
     Signin,
     GetAllManagersData,
     GetManagerDataById,

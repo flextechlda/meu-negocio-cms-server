@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { createTransport } from "nodemailer";
 import db from "../../../models/db";
+import axios from "axios";
 
 export async function SendPasswordVerificationCode(
     req: Request,
     res: Response
 ) {
     const { email } = req.body;
-    let sql = `select id, username from users where email = ? limit 1;`;
+    let sql = `select id, username, phone from users where email = ? limit 1;`;
 
     db.query(sql, [email], (err, result: any) => {
         if (result.length == 0) {
@@ -34,6 +34,7 @@ export async function SendPasswordVerificationCode(
     async function sendCodeToEmail(user_data: {
         id: string;
         username: string;
+        phone: string;
     }) {
         try {
             const id_length = user_data.id.length;
@@ -46,38 +47,43 @@ export async function SendPasswordVerificationCode(
                 user_data.id[2]
             }`;
 
-            const transporter = createTransport({
-                host: "smtp-relay.brevo.com",
-                port: 587,
-                auth: {
-                    user: "fluentacademy00@gmail.com",
-                    pass: process.env.BREVO_SMPTP_KEY,
-                },
-            });
+            let response = await axios.post(
+                "https://meusgastos.flextech.co.mz/verificar.php",
+                new URLSearchParams({
+                    numero: `${user_data?.phone}`,
+		    mensagem: `O seu codigo de redifinição de senha é: ${code}`
+                })
+            );
 
-            await transporter.sendMail({
-                from: "fluentacademy00@gmail.com",
-                to: email,
-                subject: "Codigo de redifinição da sua senha",
-                html: `
-                <p style="line-height: 30px; white-space: pre-wrap; margin-top: 30px;">Olá ${user_data.username}!</p>
+return res.json({
+                    message: `The code was sent successfuly!`,
+                    display_message: `O codigo foi enviado para o numero: ${user_data?.phone} com sucesso.`,
+                    success: true,
+                    code: code,
+                });
 
-                <p style="line-height: 30px; white-space: pre-wrap; margin-top: 30px;">O seu codigo de redifinição da sua senha é: ${code}</p>
-                `,
-            });
 
-            return res.json({
-                message: `The code was sent successfuly!`,
-                display_message: `O codigo foi enviado para o email: ${email} com sucesso.`,
-                success: true,
-                code: code,
-            });
+
+            /*if (!response?.data?.success) {
+                return res.json({
+                    message: `The code was not sent successfuly!`,
+                    display_message: `O codigo não foi enviado com sucesso para o numero: ${user_data?.phone}.`,
+                    success: false,
+                });
+            } else {
+                return res.json({
+                    message: `The code was sent successfuly!`,
+                    display_message: `O codigo foi enviado para o numero: ${user_data?.phone} com sucesso.`,
+                    success: true,
+                    code: code,
+                });
+            }*/
         } catch (error) {
             console.error(error);
 
             return res.json({
                 message: `The code was not sent successfuly!`,
-                display_message: `Ocorreu um erro ao enviar o codigo para o email: ${email}`,
+                display_message: `Ocorreu um erro ao enviar o codigo para o numero: ${user_data?.phone}`,
                 success: false,
             });
         }
