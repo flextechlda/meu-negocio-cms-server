@@ -8,8 +8,6 @@ dotenv.config();
 // externals modules
 import db from "./models/db";
 import server_routes from "./routes";
-import { uploadFile } from "./services/aws/s3";
-import { formatMySQLTimestamp } from "./utils/formatMySQLTimestamp";
 
 const app = express();
 
