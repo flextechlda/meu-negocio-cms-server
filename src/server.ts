@@ -29,9 +29,9 @@ app.get("/", async (request, response) => {
 
 app.get("/api/current-mobile-app-version", async (request, response) => {
     response.json({
-        current_mobile_app_version: "1.0.6",
+        current_mobile_app_version: "1.0.7",
         download_link:
-            "https://expo.dev/artifacts/eas/wH3UNM2Jq7YTmSVHwzsp1b.apk",
+            "https://expo.dev/artifacts/eas/hqtLQBjAWZBnr95rMETFLB.apk",
     });
 });
 
