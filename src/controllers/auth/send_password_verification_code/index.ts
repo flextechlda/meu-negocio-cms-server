@@ -55,29 +55,13 @@ export async function SendPasswordVerificationCode(
                 })
             );
 
-return res.json({
-                    message: `The code was sent successfuly!`,
-                    display_message: `O codigo foi enviado para o numero: ${user_data?.phone} com sucesso.`,
-                    success: true,
-                    code: code,
-                });
+            return res.json({
+                message: `The code was sent successfuly!`,
+                display_message: `O codigo foi enviado para o numero: ${user_data?.phone} com sucesso.`,
+                success: true,
+                code: code,
+            });
 
-
-
-            /*if (!response?.data?.success) {
-                return res.json({
-                    message: `The code was not sent successfuly!`,
-                    display_message: `O codigo não foi enviado com sucesso para o numero: ${user_data?.phone}.`,
-                    success: false,
-                });
-            } else {
-                return res.json({
-                    message: `The code was sent successfuly!`,
-                    display_message: `O codigo foi enviado para o numero: ${user_data?.phone} com sucesso.`,
-                    success: true,
-                    code: code,
-                });
-            }*/
         } catch (error) {
             console.error(error);
 

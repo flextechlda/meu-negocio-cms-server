@@ -8,6 +8,8 @@ dotenv.config();
 // externals modules
 import db from "./models/db";
 import server_routes from "./routes";
+import { uploadFile } from "./services/aws/s3";
+import { formatMySQLTimestamp } from "./utils/formatMySQLTimestamp";
 
 const app = express();
 
@@ -29,8 +31,9 @@ app.get("/", async (request, response) => {
 
 app.get("/api/current-mobile-app-version", async (request, response) => {
     response.json({
-        current_mobile_app_version: "1.0.4",
-        download_link: "https://expo.dev/artifacts/eas/wH3UNM2Jq7YTmSVHwzsp1b.apk",
+        current_mobile_app_version: "1.0.6",
+        download_link:
+            "https://expo.dev/artifacts/eas/wH3UNM2Jq7YTmSVHwzsp1b.apk",
     });
 });
 
